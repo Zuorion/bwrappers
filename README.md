@@ -3,8 +3,11 @@
 my experiments with moddal operator wrappers in blender 
 
 Currently there are:
+
 -Offset Edges
+
 -Bevel
+
 -VertexToCircle
 
 Made using considerable amount of Machin3 code. Check out his Blender addons: https://machin3.io/
