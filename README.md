@@ -18,6 +18,8 @@ Offset Edges
 (require mesh tools addon enabled)
 ![](https://i.imgur.com/8hJ9C08.png)
 ![](https://i.imgur.com/E2aKazG.gif)
+required:
+![](https://i.imgur.com/Ywwummr.png)
 ---
 
 Bevel
@@ -31,4 +33,5 @@ Verticle to Circle
 
 ![](https://i.imgur.com/4HgdMAe.png)
 ![](https://i.imgur.com/7rKKfN9.gif)
+Good to have enabled (looptools for true circular shape)
 ---
