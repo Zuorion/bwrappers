@@ -33,9 +33,9 @@ class ZuoDeselectSettings:
 
 class ZuoDeselect(bpy.types.Operator, ZuoDeselectSettings):
     bl_idname = "mesh.zuo_deselect"
-    bl_label = "Deselect Modal Wrapper"
+    bl_label = "Deselect checker Modal"
     bl_options = {'REGISTER', 'UNDO'}
-    bl_description = "Deselect"
+    bl_description = "Deselect Modal Wrapper"
 
 
     #method = EnumProperty(name="Method", items=methoditems, default="OFFSET")
@@ -71,7 +71,7 @@ class ZuoDeselect(bpy.types.Operator, ZuoDeselectSettings):
         context, event = args
         draw_init(self, event)
 
-        draw_title(self, "Vert to Circle")
+        draw_title(self, "Checker Deselect")
 
         if self.nonmod:
             draw_prop(self, "Skip    »»»", self.checker_skip, offset=18, hint="scroll UP/DOWN")

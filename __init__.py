@@ -39,6 +39,24 @@ from .Vtocircle import *
 from .deselect import *
 #from .ripoffset import *
 
+class MESH_MT_meshwrappers(bpy.types.Menu):
+    bl_label = "Extra modals"
+    bl_idname = "MESH_MT_meshwrappers"
+
+    # Set the menu operators and draw functions
+    def draw(self, context):
+        layout = self.layout
+
+        layout.operator("mesh.zuo_vert2circle")
+        layout.operator("mesh.zuo_offsetedges")
+        layout.operator("mesh.zuo_bevel")  
+        
+    
+def meshwrappersmenu_callback(self, context):
+    self.layout.menu(MESH_MT_meshwrappers.bl_idname)
+
+def meshselectmenu_callback(self, context):
+    self.layout.operator("mesh.zuo_deselect")
 
 def get_hotkey_entry_item(km, kmi_name):
     for i, km_item in enumerate(km.keymap_items):
@@ -63,6 +81,24 @@ class AddonPreferences(bpy.types.AddonPreferences):
             ('MOUSEFOLLOW', "Follow Mouse", ""),
         ), default='TOP')
     
+    def addtomenuupdate(self, context):
+        if self.addtomenu:
+            bpy.types.VIEW3D_MT_edit_mesh.append(meshwrappersmenu_callback)
+            bpy.types.VIEW3D_MT_select_edit_mesh.append(meshselectmenu_callback)
+        else:
+            bpy.types.VIEW3D_MT_edit_mesh.remove(meshwrappersmenu_callback)
+            bpy.types.VIEW3D_MT_select_edit_mesh.remove(meshselectmenu_callback)
+        return
+    
+    addtomenu:bpy.props.BoolProperty(
+        name="Show in menu",
+        description="Show opertors in select and mesh menus",
+        default=True,
+        update=addtomenuupdate
+    )
+    
+    
+    
     def draw(self, context):
         layout = self.layout
         wm = bpy.context.window_manager
@@ -77,6 +113,8 @@ class AddonPreferences(bpy.types.AddonPreferences):
         URow = box.row(align=True)
         URow.prop(self, "hud_hints")
         URow.prop(self, "hud_StickSide")
+        URow = box.row(align=True)
+        URow.prop(self, "addtomenu")
         
         
         box = layout.box()
@@ -86,9 +124,8 @@ class AddonPreferences(bpy.types.AddonPreferences):
         col.separator()
         kc = wm.keyconfigs.user
         km = kc.keymaps['Mesh']
+        
         kmi = get_hotkey_entry_item(km, 'mesh.zuo_vert2circle')
-        
-        
         col.context_pointer_set("keymap", km)
         rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
         
@@ -97,6 +134,10 @@ class AddonPreferences(bpy.types.AddonPreferences):
         rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
         
         kmi = get_hotkey_entry_item(km, 'mesh.zuo_bevel')
+        col.context_pointer_set("keymap", km)
+        rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
+        
+        kmi = get_hotkey_entry_item(km, 'mesh.zuo_deselect')
         col.context_pointer_set("keymap", km)
         rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
         
@@ -111,6 +152,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
          
             
 classes = (
+    MESH_MT_meshwrappers,
     ZuoBevel,
     ZuoOffsetEdges,
     #ZuoInset
@@ -139,8 +181,16 @@ def register():
         
         kmi = km.keymap_items.new('mesh.zuo_bevel', 'B', 'PRESS', ctrl=True, alt=True)
         kmi.active = False
+        
+        kmi = km.keymap_items.new('mesh.zuo_deselect', 'D', 'PRESS', ctrl=True, shift=True, alt=True)
+        kmi.active = False
+        
         addon_keymaps.append((km, kmi))
+        
+    bpy.types.VIEW3D_MT_edit_mesh.append(meshwrappersmenu_callback)
+    bpy.types.VIEW3D_MT_select_edit_mesh.append(meshselectmenu_callback)
 
+    
 
 def unregister():
 
@@ -153,6 +203,9 @@ def unregister():
         for km, kmi in addon_keymaps:
             km.keymap_items.remove(kmi)
     addon_keymaps.clear()
+    
+    bpy.types.VIEW3D_MT_edit_mesh.remove(meshwrappersmenu_callback)
+    bpy.types.VIEW3D_MT_select_edit_mesh.remove(meshselectmenu_callback)
 
 if __name__ == "__main__":
     register()
