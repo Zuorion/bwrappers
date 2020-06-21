@@ -152,7 +152,7 @@ class ZuoBevel(bpy.types.Operator, ZuoBevelSettings):
         
     def draw_HUD(self, args):
         context, event = args
-        draw_init(self, args, 0, 50)
+        draw_init(self, event)
 
         draw_title(self, "Bevel")
 

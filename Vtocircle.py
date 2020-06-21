@@ -76,7 +76,7 @@ class ZuoVert2Circle(bpy.types.Operator, ZuoV2CirclelSettings):
         
     def draw_HUD(self, args):
         context, event = args
-        draw_init(self, args)
+        draw_init(self, event)
 
         draw_title(self, "Vert to Circle")
 

@@ -59,8 +59,8 @@ class AddonPreferences(bpy.types.AddonPreferences):
         items=(
             ('TOP', "Top", ""),
             ('BOTTOM', "Bottom", ""),
-            ('MOUSE', "Mouse", ""),
-            ('MOUSEFOLLOW', "StickMouse", ""),
+            ('MOUSE', "Mouse Start", ""),
+            ('MOUSEFOLLOW', "Follow Mouse", ""),
         ), default='TOP')
     
     def draw(self, context):

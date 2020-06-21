@@ -143,7 +143,7 @@ class ZuoOffsetEdges(bpy.types.Operator, ZuoOffsetSettings):
     
     def draw_HUD(self, args):
         context, event = args
-        draw_init(self, args)
+        draw_init(self, event)
         draw_title(self, "Offset Edges")
         draw_prop(self, "Method", get_enumprop(self.geometry_mode,geometry_mode_items), offset=0, hint="SHIFT scroll UP/DOWN")
         self.offset += 10
