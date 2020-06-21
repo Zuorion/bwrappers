@@ -142,6 +142,7 @@ class ZuoOffsetEdges(bpy.types.Operator, ZuoOffsetSettings):
         #row.prop(self, 'flip_width', icon='ARROW_LEFTRIGHT', icon_only=True)
     
     def draw_HUD(self, args):
+        context, event = args
         draw_init(self, args)
         draw_title(self, "Offset Edges")
         draw_prop(self, "Method", get_enumprop(self.geometry_mode,geometry_mode_items), offset=0, hint="SHIFT scroll UP/DOWN")
@@ -488,6 +489,7 @@ class ZuoOffsetEdges(bpy.types.Operator, ZuoOffsetSettings):
 
         #Init values
         self.resetmouse = False
+        self.offset = 0
         self.temp_modalvalue = 0
         self.temp_depth = 0.0
         self.geometry_mode = 'offset'
@@ -511,7 +513,7 @@ class ZuoOffsetEdges(bpy.types.Operator, ZuoOffsetSettings):
         except:
             return {'FINISHED'}
  
-        args = (self, event)
+        args = (context, event)
         self.HUD = bpy.types.SpaceView3D.draw_handler_add(self.draw_HUD, (args, ), 'WINDOW', 'POST_PIXEL')
 
         context.window_manager.modal_handler_add(self)

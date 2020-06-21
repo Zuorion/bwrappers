@@ -36,6 +36,7 @@ import rna_keymap_ui
 from .bevel import *
 from .offset import *
 from .Vtocircle import *
+from .deselect import *
 #from .ripoffset import *
 
 
@@ -54,6 +55,13 @@ class AddonPreferences(bpy.types.AddonPreferences):
     hud_DisableColor:bpy.props.FloatVectorProperty(name="Disabled",description="Disabled bool property color", default=(0.6,0.3,0.3),subtype='COLOR')
     hud_scale:bpy.props.FloatProperty(name="HUD Scale", description="HUD Scale factor", min=0.1, step=0.05, default=1.0)
     hud_hints:bpy.props.BoolProperty(name="Always show hints",description="Always show help hints next to property, if off hints can be toogled by [H]", default=True)
+    hud_StickSide: bpy.props.EnumProperty(name="HUD location",description="HUD anchor location",
+        items=(
+            ('TOP', "Top", ""),
+            ('BOTTOM', "Bottom", ""),
+            ('MOUSE', "Mouse", ""),
+            ('MOUSEFOLLOW', "StickMouse", ""),
+        ), default='TOP')
     
     def draw(self, context):
         layout = self.layout
@@ -68,6 +76,7 @@ class AddonPreferences(bpy.types.AddonPreferences):
         box.prop(self, "hud_scale")
         URow = box.row(align=True)
         URow.prop(self, "hud_hints")
+        URow.prop(self, "hud_StickSide")
         
         
         box = layout.box()
@@ -107,7 +116,8 @@ classes = (
     #ZuoInset
     #ZuoRipOffsetEdges,
     AddonPreferences,
-    ZuoVert2Circle
+    ZuoVert2Circle,
+    ZuoDeselect
 )
 
 

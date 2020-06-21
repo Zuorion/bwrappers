@@ -75,6 +75,7 @@ class ZuoVert2Circle(bpy.types.Operator, ZuoV2CirclelSettings):
         return False
         
     def draw_HUD(self, args):
+        context, event = args
         draw_init(self, args)
 
         draw_title(self, "Vert to Circle")
@@ -239,7 +240,8 @@ class ZuoVert2Circle(bpy.types.Operator, ZuoV2CirclelSettings):
         # mouse positions
         self.mouse_x = self.init_mouse_x = self.fixed_mouse_x = event.mouse_region_x
         self.mouse_y = self.init_mouse_y = self.fixed_mouse_y = event.mouse_region_y
-
+        
+        self.offset = 0
         self.temp_width = 0
         self.width = 0
         self.resetmouse = False
@@ -266,7 +268,7 @@ class ZuoVert2Circle(bpy.types.Operator, ZuoV2CirclelSettings):
 
         except:
             return {'FINISHED'}  
-        args = (self, event)
+        args = (context, event)
         self.HUD = bpy.types.SpaceView3D.draw_handler_add(self.draw_HUD, (args, ), 'WINDOW', 'POST_PIXEL')
         print("a")
         context.window_manager.modal_handler_add(self)

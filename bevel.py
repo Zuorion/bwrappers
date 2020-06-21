@@ -151,7 +151,8 @@ class ZuoBevel(bpy.types.Operator, ZuoBevelSettings):
         return False
         
     def draw_HUD(self, args):
-        draw_init(self, args)
+        context, event = args
+        draw_init(self, args, 0, 50)
 
         draw_title(self, "Bevel")
 
@@ -470,6 +471,7 @@ class ZuoBevel(bpy.types.Operator, ZuoBevelSettings):
         self.temp_width = 0
         self.temp_offset_pct = 25
         self.temp_spread = 0.3
+        self.offset = 0
         self.width = 0
         self.spread=0.3
         self.resetmouse = False
@@ -499,7 +501,7 @@ class ZuoBevel(bpy.types.Operator, ZuoBevelSettings):
 
         except:
             return {'FINISHED'}  
-        args = (self, event)
+        args = (context, event)
         self.HUD = bpy.types.SpaceView3D.draw_handler_add(self.draw_HUD, (args, ), 'WINDOW', 'POST_PIXEL')
         print("a")
         context.window_manager.modal_handler_add(self)

@@ -13,15 +13,26 @@ from . utils import get_prefs
 
 def draw_init(self, event, HUDx_offset=0, HUDy_offset=20):
     self.font_id = 1
-    self.offset = 0
-
+    
+    
+    
     # update HUD location
-    #self.HUD_x = event.mouse_x - self.region_offset_x + HUDx_offset
-    #self.HUD_y = event.mouse_y - self.region_offset_y + HUDy_offset
-    #bpy.context.area.width
-    #bpy.context.area.height
-    self.HUD_x = bpy.context.area.width / 2  - 150 + HUDx_offset
-    self.HUD_y = bpy.context.area.height -90 + HUDy_offset
+    HUDside = get_prefs().hud_StickSide
+    if HUDside == 'MOUSE':
+        self.HUD_x = event.mouse_region_x + HUDx_offset
+        self.HUD_y = event.mouse_region_y + HUDy_offset
+    elif HUDside == 'MOUSEFOLLOW':
+        self.HUD_x = self.mouse_x + HUDx_offset
+        self.HUD_y = self.mouse_y + HUDy_offset
+    elif HUDside == 'TOP':
+        self.HUD_x = bpy.context.area.width / 2  - 150 + HUDx_offset
+        self.HUD_y = bpy.context.area.height - 90 + HUDy_offset
+    else:
+        self.HUD_x = bpy.context.area.width / 2  - 150 + HUDx_offset
+        self.HUD_y = self.offset + 50 + HUDy_offset
+        print (self.offset)
+    
+    self.offset = 0
 
 
 def draw_title(self, title, subtitle=None, subtitleoffset=125, HUDcolor=None, HUDalpha=0.5, shadow=True):
