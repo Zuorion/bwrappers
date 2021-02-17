@@ -20,8 +20,8 @@
 bl_info = {
     "name": "Dumb Operator Wrappers",
     "author": "Zuorion",
-    "version": (0, 1),
-    "blender": (2, 81, 0),
+    "version": (0, 2),
+    "blender": (2, 91, 0),
     "location": "",
     "description": "Modal Wrappers for: Bevel, Inset, OffsetEdges done via operator+REDO",
     "warning": "",

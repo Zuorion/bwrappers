@@ -523,16 +523,38 @@ class ZuoBevel(bpy.types.Operator, ZuoBevelSettings):
                
         
         if self.miter_inner != "SHARP":
-            bpy.ops.mesh.bevel(True, offset_type=self.method, offset=self.width, segments=self.segments, profile=self.profile, vertex_only=self.vertex_only, clamp_overlap=self.clamp_overlap, loop_slide=self.loop_slide, miter_inner=self.miter_inner,miter_outer=self.miter_outer, offset_pct=self.offset_pct, harden_normals=self.harden_normals, face_strength_mode=self.face_strength_mode,spread=self.spread, use_custom_profile=self.usecustomprofile,material=self.material)
+            bpy.ops.mesh.bevel(True, offset_type=self.method,
+                               offset=self.width,
+                               segments=self.segments,
+                               profile=self.profile,
+                               affect='EDGES',
+                               clamp_overlap=self.clamp_overlap,
+                               loop_slide=self.loop_slide,
+                               miter_inner=self.miter_inner,
+                               miter_outer=self.miter_outer,
+                               offset_pct=self.offset_pct,
+                               harden_normals=self.harden_normals,
+                               face_strength_mode=self.face_strength_mode,
+                               spread=self.spread,
+                               material=self.material)
         else:
-            bpy.ops.mesh.bevel(True, offset_type=self.method, offset=self.width, segments=self.segments, profile=self.profile, vertex_only=self.vertex_only, clamp_overlap=self.clamp_overlap, loop_slide=self.loop_slide, miter_inner=self.miter_inner,miter_outer=self.miter_outer, offset_pct=self.offset_pct, harden_normals=self.harden_normals, face_strength_mode=self.face_strength_mode, use_custom_profile=self.usecustomprofile,material=self.material)
+            bpy.ops.mesh.bevel(True, offset_type=self.method,
+                               offset=self.width,
+                               segments=self.segments,
+                               profile=self.profile,
+                               affect='EDGES',
+                               clamp_overlap=self.clamp_overlap,
+                               loop_slide=self.loop_slide,
+                               miter_inner=self.miter_inner,
+                               miter_outer=self.miter_outer,
+                               offset_pct=self.offset_pct,
+                               harden_normals=self.harden_normals,
+                               face_strength_mode=self.face_strength_mode,
+                               material=self.material)
         if self.mergeverts:
             bpy.ops.mesh.select_more(use_face_step=False)
             bpy.ops.mesh.remove_doubles(threshold=0.0001)
 
-        
-        
-        #bpy.ops.mesh.bevel(offset=0.294081, offset_pct=0, vertex_only=False, harden_normals=True, face_strength_mode='NEW', miter_outer='PATCH', miter_inner='ARC', spread=0.3)
 
         return True
 

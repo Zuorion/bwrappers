@@ -291,7 +291,7 @@ class ZuoVert2Circle(bpy.types.Operator, ZuoV2CirclelSettings):
         if self.checker:
             bpy.ops.mesh.select_nth(skip=self.checker_skip, nth=self.checker_nth, offset=self.checker_offset)
 
-        bpy.ops.mesh.bevel(offset=self.width, profile=0.085, segments=self.segments, clamp_overlap=True, vertex_only=True)
+        bpy.ops.mesh.bevel(offset=self.width, profile=0.085, segments=self.segments, clamp_overlap=True, affect='VERTICES')
         bpy.ops.mesh.dissolve_faces()
         bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='FACE')
         
